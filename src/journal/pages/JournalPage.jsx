@@ -1,3 +1,11 @@
+import { MailOutlineOutlined } from '@mui/icons-material';
+import { Typography } from '@mui/material';
+
 export const JournalPage = () => {
-  return <div>JournalPage</div>;
+  return (
+    <>
+      <Typography variant='h1'>JournalPage</Typography>
+      <MailOutlineOutlined />
+    </>
+  );
 };
