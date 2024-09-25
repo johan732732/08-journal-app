@@ -10,7 +10,10 @@ export const JournalLayout = ({ children }) => {
 
       <SlideBar drawerWidth={drawerWidth} />
 
-      <Box component='main' sx={{ flexGrow: 1, padding: 3 }}>
+      <Box
+        component='main'
+        sx={{ ml: { sm: `${drawerWidth}px` }, flexgrow: 1, padding: 3 }}
+      >
         {/* Toolbar */}
         {children}
       </Box>

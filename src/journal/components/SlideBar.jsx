@@ -20,7 +20,7 @@ export const SlideBar = ({ drawerWidth = 240 }) => {
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
     >
       <Drawer
-        variant='temporary'
+        variant='permanent'
         open
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
