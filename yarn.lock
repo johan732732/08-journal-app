@@ -2406,7 +2406,8 @@ iterator.prototype@^1.1.2:
     "@mui/icons-material" "^6.1.0"
     "@mui/material" "^6.1.0"
     "@reduxjs/toolkit" "^2.6.1"
-    journal-app "file:../../../Users/Johan/AppData/Local/Yarn/Cache/v6/npm-journal-app-0.0.0-e2b5857e-80c9-46be-a6fa-053e22811fac-1744778834457/node_modules/journal-app"
+    firebase "^11.6.0"
+    journal-app "file:../../../Users/Johan/AppData/Local/Yarn/Cache/v6/npm-journal-app-0.0.0-bd33cfea-48fc-43dc-8120-f7862c853b8f-1744879377921/node_modules/journal-app"
     react "^18.3.1"
     react-dom "^18.3.1"
     react-redux "^9.2.0"
@@ -3083,6 +3084,11 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+sweetalert2@^11.19.1:
+  version "11.19.1"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.19.1.tgz#b6583a3db8e17b2408f45c19d855f1416b37c2ae"
+  integrity sha512-+8yws3Sc1srAZbrgdhmEIZny1I1UOYhJOIOdtOlv4TYaP5kkwQ9Zm8/BT23Qg+KdByCNOazltxEJAHzXVu8mhA==
 
 text-table@^0.2.0:
   version "0.2.0"

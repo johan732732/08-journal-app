@@ -6,11 +6,12 @@ import { useEffect, useMemo } from 'react';
 
 import { useForm } from '../../hooks/useForm';
 import { setActiveNote, startSaveNote } from '../../store/journal';
+import Swal from 'sweetalert2';
 
 export const NoteView = () => {
   const dispatch = useDispatch();
 
-  const { active: note } = useSelector((state) => state.journal);
+  const { active: note, messageSaved, isSaving } = useSelector((state) => state.journal);
 
   const { body, title, date, onInputChange, formState } = useForm(note);
 
@@ -22,6 +23,12 @@ export const NoteView = () => {
   useEffect(() => {
     dispatch(setActiveNote(formState));
   }, [formState]);
+
+  useEffect(() => {
+    if (messageSaved.length > 0) {
+      Swal.fire('Note updated', messageSaved, 'success');
+    }
+  }, [messageSaved]);
 
   const onSaveNote = () => {
     dispatch(startSaveNote());
@@ -44,6 +51,7 @@ export const NoteView = () => {
 
       <Grid2 size={{ xs: 6 }} display="flex" justifyContent="flex-end">
         <Button
+          disabled={isSaving}
           onClick={onSaveNote}
           color="primary"
           variant="outlined"
