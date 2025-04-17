@@ -1,14 +1,25 @@
 import { Link as RouterLink } from "react-router-dom";
 import { Google } from "@mui/icons-material";
-import { Button, Grid2, Link, TextField, Typography } from "@mui/material";
+import {
+  Alert,
+  Button,
+  Grid2,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { AuthLayout } from "../layout/AuthLayout";
 import { useForm } from "../../hooks/useForm";
-import { checkingAuthentication, startGoogleSignIn } from "../../store/auth";
+import {
+  checkingAuthentication,
+  startGoogleSignIn,
+  startLoginWithEmailPassword,
+} from "../../store/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
 
 export const LoginPage = () => {
-  const { status } = useSelector((state) => state.auth);
+  const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
@@ -21,8 +32,8 @@ export const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log({ email, password });
-    dispatch(checkingAuthentication(email, password));
+
+    dispatch(startLoginWithEmailPassword(email, password));
   };
 
   const onGoogleSignIn = () => {
@@ -56,6 +67,18 @@ export const LoginPage = () => {
               value={password}
               onChange={onInputChange}
             />
+          </Grid2>
+
+          <Grid2
+            item
+            size={{ xs: 12 }}
+            xs={12}
+            sx={{ mt: 2 }}
+            display={!!errorMessage ? "" : "none"}
+          >
+            <Grid2 item size={{ xs: 12 }}>
+              <Alert severity="error">{errorMessage}</Alert>
+            </Grid2>
           </Grid2>
 
           <Grid2 container size={12} spacing={2} sx={{ mb: 2, mt: 1 }}>
