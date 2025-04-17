@@ -1,4 +1,8 @@
-import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import {
+  DeleteOutline,
+  SaveOutlined,
+  UploadOutlined,
+} from '@mui/icons-material';
 import {
   Button,
   Grid2,
@@ -14,6 +18,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import { useForm } from '../../hooks/useForm';
 import {
   setActiveNote,
+  startDeletingNote,
   startSaveNote,
   startUploadingFiles,
 } from '../../store/journal';
@@ -73,6 +78,10 @@ export const NoteView = () => {
     }
 
     dispatch(startUploadingFiles(files));
+  };
+
+  const onDelete = () => {
+    dispatch(startDeletingNote());
   };
 
   return (
@@ -146,6 +155,13 @@ export const NoteView = () => {
           value={body}
           onChange={onInputChange}
         />
+      </Grid2>
+
+      <Grid2 container justifyContent="flex-end" sx={{ width: '100%' }}>
+        <Button onClick={onDelete} sx={{ mt: 2 }} color="error">
+          <DeleteOutline />
+          Delete
+        </Button>
       </Grid2>
 
       <Grid2 item size={{ xs: 12 }} sx={{ mt: 2 }}>
