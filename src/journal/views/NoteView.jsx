@@ -1,5 +1,12 @@
 import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
-import { Button, Grid2, Icon, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  Grid2,
+  Icon,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { ImageGallery } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useMemo, useRef } from 'react';
@@ -142,7 +149,7 @@ export const NoteView = () => {
       </Grid2>
 
       <Grid2 item size={{ xs: 12 }} sx={{ mt: 2 }}>
-        <ImageGallery />
+        <ImageGallery images={note.imageUrls} />
       </Grid2>
     </Grid2>
   );
