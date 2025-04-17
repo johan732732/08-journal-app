@@ -1,17 +1,25 @@
-import { SaveOutlined } from '@mui/icons-material';
-import { Button, Grid2, TextField, Typography } from '@mui/material';
+import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import { Button, Grid2, Icon, IconButton, TextField, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { useForm } from '../../hooks/useForm';
-import { setActiveNote, startSaveNote } from '../../store/journal';
+import {
+  setActiveNote,
+  startSaveNote,
+  startUploadingFiles,
+} from '../../store/journal';
 import Swal from 'sweetalert2';
 
 export const NoteView = () => {
   const dispatch = useDispatch();
 
-  const { active: note, messageSaved, isSaving } = useSelector((state) => state.journal);
+  const {
+    active: note,
+    messageSaved,
+    isSaving,
+  } = useSelector((state) => state.journal);
 
   const { body, title, date, onInputChange, formState } = useForm(note);
 
@@ -19,6 +27,8 @@ export const NoteView = () => {
     const newDate = new Date(date);
     return newDate.toUTCString();
   }, [date]);
+
+  const fileInputRef = useRef();
 
   useEffect(() => {
     dispatch(setActiveNote(formState));
@@ -32,6 +42,30 @@ export const NoteView = () => {
 
   const onSaveNote = () => {
     dispatch(startSaveNote());
+  };
+
+  const onFileInputChange = ({ target }) => {
+    const files = target.files;
+
+    if (!files || files.length === 0) return;
+
+    if (files.length > 3) {
+      return Swal.fire(
+        'Too many images',
+        'You can only upload a maximum of 3 images',
+        'error'
+      );
+    }
+
+    if (!files[0].type.includes('image')) {
+      return Swal.fire(
+        'Invalid file type',
+        'Only image files are allowed',
+        'error'
+      );
+    }
+
+    dispatch(startUploadingFiles(files));
   };
 
   return (
@@ -50,6 +84,26 @@ export const NoteView = () => {
       </Grid2>
 
       <Grid2 size={{ xs: 6 }} display="flex" justifyContent="flex-end">
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          style={{ display: 'none' }}
+          id="fileSelector"
+          ref={fileInputRef}
+          onChange={onFileInputChange}
+        />
+        <IconButton
+          onClick={() => fileInputRef.current.click()}
+          disabled={isSaving}
+          variant="outlined"
+          color="primary"
+          component="span"
+          sx={{ padding: 2, mr: 1 }}
+        >
+          <UploadOutlined sx={{ fontSize: 30, mr: 1 }} />
+        </IconButton>
+
         <Button
           disabled={isSaving}
           onClick={onSaveNote}
