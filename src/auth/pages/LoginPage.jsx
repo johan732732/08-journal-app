@@ -1,5 +1,5 @@
-import { Link as RouterLink } from "react-router-dom";
-import { Google } from "@mui/icons-material";
+import { Link as RouterLink } from 'react-router-dom';
+import { Google } from '@mui/icons-material';
 import {
   Alert,
   Button,
@@ -7,28 +7,29 @@ import {
   Link,
   TextField,
   Typography,
-} from "@mui/material";
-import { AuthLayout } from "../layout/AuthLayout";
-import { useForm } from "../../hooks/useForm";
+} from '@mui/material';
+import { AuthLayout } from '../layout/AuthLayout';
+import { useForm } from '../../hooks/useForm';
 import {
-  checkingAuthentication,
   startGoogleSignIn,
   startLoginWithEmailPassword,
-} from "../../store/auth";
-import { useDispatch, useSelector } from "react-redux";
-import { useMemo } from "react";
+} from '../../store/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { useMemo } from 'react';
+
+const formData = {
+  email: '',
+  password: '',
+};
 
 export const LoginPage = () => {
   const { status, errorMessage } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
 
-  const { email, password, onInputChange } = useForm({
-    email: "",
-    password: "",
-  });
+  const { email, password, onInputChange } = useForm(formData);
 
-  const isAuthenticating = useMemo(() => status === "checking", [status]);
+  const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -37,13 +38,16 @@ export const LoginPage = () => {
   };
 
   const onGoogleSignIn = () => {
-    console.log("Google sign in");
+    console.log('Google sign in');
     dispatch(startGoogleSignIn());
   };
 
   return (
     <AuthLayout title="Login">
-      <form onSubmit={onSubmit} className='animate__animated animate__fadeIn animate__faster'>
+      <form
+        onSubmit={onSubmit}
+        className="animate__animated animate__fadeIn animate__faster"
+      >
         <Grid2 container>
           <Grid2 item size={{ xs: 12 }} sx={{ mt: 2 }}>
             <TextField
@@ -74,7 +78,7 @@ export const LoginPage = () => {
             size={{ xs: 12 }}
             xs={12}
             sx={{ mt: 2 }}
-            display={!!errorMessage ? "" : "none"}
+            display={!!errorMessage ? '' : 'none'}
           >
             <Grid2 item size={{ xs: 12 }}>
               <Alert severity="error">{errorMessage}</Alert>

@@ -1,25 +1,37 @@
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid2, TextField, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
+import { useForm } from '../../hooks/useForm';
+import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 
 export const NoteView = () => {
+  const { active: note } = useSelector((state) => state.journal);
+
+  const { body, title, date, onInputChange, formState } = useForm(note);
+
+  const dateString = useMemo(() => {
+    const newDate = new Date(date);
+    return newDate.toUTCString();
+  }, [date]);
+
   return (
     <Grid2
-      className='animate__animated animate__fadeIn animate__faster'
+      className="animate__animated animate__fadeIn animate__faster"
       container
-      direaction='row'
-      justifyContent='space-between'
-      alignItems='center'
+      direaction="row"
+      justifyContent="space-between"
+      alignItems="center"
       sx={{ mb: 1 }}
     >
       <Grid2 item size={{ xs: 6 }}>
-        <Typography fontSize={39} fontWeight='light'>
-          September 25 2024
+        <Typography fontSize={39} fontWeight="light">
+          {dateString}
         </Typography>
       </Grid2>
 
-      <Grid2 size={{ xs: 6 }} display='flex' justifyContent='flex-end'>
-        <Button color='primary' variant='outlined' sx={{ padding: 2 }}>
+      <Grid2 size={{ xs: 6 }} display="flex" justifyContent="flex-end">
+        <Button color="primary" variant="outlined" sx={{ padding: 2 }}>
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Save
         </Button>
@@ -27,20 +39,26 @@ export const NoteView = () => {
 
       <Grid2 container size={{ xs: 12 }} sx={{ mt: 2 }}>
         <TextField
-          type='text'
-          variant='filled'
+          type="text"
+          variant="filled"
           fullWidth
-          placeholder='Enter a title'
-          label='Title'
+          placeholder="Enter a title"
+          label="Title"
           sx={{ border: 'none', mb: 1 }}
+          name="title"
+          value={title}
+          onChange={onInputChange}
         />
         <TextField
-          type='text'
-          variant='filled'
+          type="text"
+          variant="filled"
           fullWidth
           multiline
-          placeholder='What happened today?'
+          placeholder="What happened today?"
           minRows={5}
+          name="body"
+          value={body}
+          onChange={onInputChange}
         />
       </Grid2>
 
