@@ -1,29 +1,19 @@
-import { TurnedInNot } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
-import {
-  Box,
-  Divider,
-  Drawer,
-  Grid2,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { Box, Divider, Drawer, List, Toolbar, Typography } from '@mui/material';
+
+import { SideBarItem } from './';
 
 export const SlideBar = ({ drawerWidth = 240 }) => {
-  const {displayName} = useSelector((state) => state.auth);
+  const { displayName } = useSelector((state) => state.auth);
+  const { notes } = useSelector((state) => state.journal);
 
   return (
     <Box
-      component='nav'
+      component="nav"
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
     >
       <Drawer
-        variant='permanent'
+        variant="permanent"
         open
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
@@ -37,7 +27,7 @@ export const SlideBar = ({ drawerWidth = 240 }) => {
         }}
       >
         <Toolbar>
-          <Typography variant='h6' noWrap component='div'>
+          <Typography variant="h6" noWrap component="div">
             {displayName}
           </Typography>
         </Toolbar>
@@ -45,26 +35,9 @@ export const SlideBar = ({ drawerWidth = 240 }) => {
         <Divider />
 
         <List>
-          {['January', 'February', 'March', 'April'].map(
-            (text) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <TurnedInNot />
-                  </ListItemIcon>
-
-                  <Grid2 container>
-                    <ListItemText primary={text} />
-                    <ListItemText
-                      secondary={
-                        'Ullamco esse proident anim tempor anim occaecat in Lorem consequat Lorem.'
-                      }
-                    />
-                  </Grid2>
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+          {notes.map((note) => (
+            <SideBarItem {...note} key={note.id} />
+          ))}
         </List>
       </Drawer>
     </Box>
