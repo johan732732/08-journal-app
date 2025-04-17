@@ -1,11 +1,15 @@
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid2, TextField, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
+
 import { useForm } from '../../hooks/useForm';
-import { useSelector } from 'react-redux';
-import { useMemo } from 'react';
+import { setActiveNote, startSaveNote } from '../../store/journal';
 
 export const NoteView = () => {
+  const dispatch = useDispatch();
+
   const { active: note } = useSelector((state) => state.journal);
 
   const { body, title, date, onInputChange, formState } = useForm(note);
@@ -14,6 +18,14 @@ export const NoteView = () => {
     const newDate = new Date(date);
     return newDate.toUTCString();
   }, [date]);
+
+  useEffect(() => {
+    dispatch(setActiveNote(formState));
+  }, [formState]);
+
+  const onSaveNote = () => {
+    dispatch(startSaveNote());
+  };
 
   return (
     <Grid2
@@ -31,7 +43,12 @@ export const NoteView = () => {
       </Grid2>
 
       <Grid2 size={{ xs: 6 }} display="flex" justifyContent="flex-end">
-        <Button color="primary" variant="outlined" sx={{ padding: 2 }}>
+        <Button
+          onClick={onSaveNote}
+          color="primary"
+          variant="outlined"
+          sx={{ padding: 2 }}
+        >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Save
         </Button>
