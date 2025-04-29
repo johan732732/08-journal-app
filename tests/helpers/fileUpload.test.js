@@ -1,7 +1,15 @@
 /**
  * @jest-environment node
  */
+import { v2 as cloudinary } from 'cloudinary';
 import { fileUpload } from '../../src/helpers/fileUpload';
+
+cloudinary.config({
+  cloud_name: 'dep6ir1mi',
+  api_key: '494217696768437',
+  api_secret: 'wnPjxKqsULcLXmo72Z8NrcABOrg',
+  secure: true,
+});
 
 describe('Test on fileUpload', () => {
   test('should upload the file to cloudinary', async () => {
@@ -14,6 +22,12 @@ describe('Test on fileUpload', () => {
 
     const url = await fileUpload(file);
     expect(typeof url).toBe('string');
+
+    const segments = url.split('/');
+    const imageId = segments[segments.length - 1].replace('.jpg', '');
+    const cloudinaryResponse = await cloudinary.api.delete_resources([
+      'journal-app/' + imageId,
+    ]);
   });
 
   test('should return null if no file is provided', async () => {
