@@ -1,5 +1,6 @@
 export const fileUpload = async (file) => {
-  if (!file) throw new Error('No file provided');
+  // if (!file) throw new Error('No file provided');
+  if (!file) return null; // Return null if no file is provided
 
   const cloudinaryURL = 'https://api.cloudinary.com/v1_1/dep6ir1mi/upload';
 
@@ -19,6 +20,7 @@ export const fileUpload = async (file) => {
     return cloudResponse.secure_url;
   } catch (error) {
     console.error(error);
-    throw new Error(error.message);
+    // throw new Error(error.message);
+    return null; // Return null if an error occurs
   }
 };
