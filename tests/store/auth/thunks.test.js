@@ -1,10 +1,12 @@
-import { loginWithEmailPassword, signInWithGoogle } from '../../../src/firebase/providers';
+import { loginWithEmailPassword, logoutFirebase, signInWithGoogle } from '../../../src/firebase/providers';
 import { checkingCredentials, login, logout } from '../../../src/store/auth';
 import {
   checkingAuthentication,
   startGoogleSignIn,
   startLoginWithEmailPassword,
+  startLogout,
 } from '../../../src/store/auth/thunks';
+import { clearNotesLogout } from '../../../src/store/journal';
 import { demoUser } from '../../fixtures/authFixtures';
 
 jest.mock('../../../src/firebase/providers');
@@ -50,4 +52,14 @@ describe('Test on AuthThunks', () => {
     expect(dispatch).toHaveBeenCalledWith(checkingCredentials());
     expect(dispatch).toHaveBeenCalledWith(login(loginData));
   });
+
+  test('StartLogout should call logoutFirebase, clearNotesLogout and logouot', async () => {
+
+    await startLogout()(dispatch);
+
+    expect(logoutFirebase).toHaveBeenCalledWith();
+    expect(dispatch).toHaveBeenCalledWith(clearNotesLogout());
+    expect(dispatch).toHaveBeenCalledWith(logout({}));
+  });
+
 });
